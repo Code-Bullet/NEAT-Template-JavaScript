@@ -49,43 +49,43 @@ class Species {
   //returns the number of excess and disjoint genes between the 2 input genomes
   //i.e. returns the number of genes which dont match
   getExcessDisjoint(brain1, brain2) {
-      var matching = 0.0;
-      for (var i = 0; i < brain1.genes.length; i++) {
-        for (var j = 0; j < brain2.genes.length; j++) {
-          if (brain1.genes[i].innovationNo == brain2.genes[j].innovationNo) {
-            matching++;
-            break;
-          }
+    var matching = 0.0;
+    for (var i = 0; i < brain1.genes.length; i++) {
+      for (var j = 0; j < brain2.genes.length; j++) {
+        if (brain1.genes[i].innovationNo == brain2.genes[j].innovationNo) {
+          matching++;
+          break;
         }
       }
-      return (brain1.genes.length + brain2.genes.length - 2 * (matching)); //return no of excess and disjoint genes
     }
-    //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //returns the avereage weight difference between matching genes in the input genomes
+    return (brain1.genes.length + brain2.genes.length - 2 * (matching)); //return no of excess and disjoint genes
+  }
+  //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //returns the avereage weight difference between matching genes in the input genomes
   averageWeightDiff(brain1, brain2) {
-      if (brain1.genes.length == 0 || brain2.genes.length == 0) {
-        return 0;
-      }
+    if (brain1.genes.length == 0 || brain2.genes.length == 0) {
+      return 0;
+    }
 
 
-      var matching = 0;
-      var totalDiff = 0;
-      for (var i = 0; i < brain1.genes.length; i++) {
-        for (var j = 0; j < brain2.genes.length; j++) {
-          if (brain1.genes[i].innovationNo == brain2.genes[j].innovationNo) {
-            matching++;
-            totalDiff += abs(brain1.genes[i].weight - brain2.genes[j].weight);
-            break;
-          }
+    var matching = 0;
+    var totalDiff = 0;
+    for (var i = 0; i < brain1.genes.length; i++) {
+      for (var j = 0; j < brain2.genes.length; j++) {
+        if (brain1.genes[i].innovationNo == brain2.genes[j].innovationNo) {
+          matching++;
+          totalDiff += abs(brain1.genes[i].weight - brain2.genes[j].weight);
+          break;
         }
       }
-      if (matching == 0) { //divide by 0 error
-        return 100;
-      }
-      return totalDiff / matching;
     }
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-    //sorts the species by fitness
+    if (matching == 0) { //divide by 0 error
+      return 100;
+    }
+    return totalDiff / matching;
+  }
+  //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  //sorts the species by fitness
   sortSpecies() {
 
     var temp = []; // new ArrayList < Player > ();
@@ -127,13 +127,13 @@ class Species {
   //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //simple stuff
   setAverage() {
-      var sum = 0;
-      for (var i = 0; i < this.players.length; i++) {
-        sum += this.players[i].fitness;
-      }
-      this.averageFitness = sum / this.players.length;
+    var sum = 0;
+    for (var i = 0; i < this.players.length; i++) {
+      sum += this.players[i].fitness;
     }
-    //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    this.averageFitness = sum / this.players.length;
+  }
+  //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
   //gets baby from the this.players in this species
   giveMeBaby(innovationHistory) {
@@ -160,35 +160,35 @@ class Species {
   //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
   //selects a player based on it fitness
   selectPlayer() {
-      var fitnessSum = 0;
-      for (var i = 0; i < this.players.length; i++) {
-        fitnessSum += this.players[i].fitness;
-      }
-      var rand = random(fitnessSum);
-      var runningSum = 0;
+    var fitnessSum = 0;
+    for (var i = 0; i < this.players.length; i++) {
+      fitnessSum += this.players[i].fitness;
+    }
+    var rand = random(fitnessSum);
+    var runningSum = 0;
 
-      for (var i = 0; i < this.players.length; i++) {
-        runningSum += this.players[i].fitness;
-        if (runningSum > rand) {
-          return this.players[i];
-        }
+    for (var i = 0; i < this.players.length; i++) {
+      runningSum += this.players[i].fitness;
+      if (runningSum > rand) {
+        return this.players[i];
       }
-      //unreachable code to make the parser happy
-      return this.players[0];
     }
-    //------------------------------------------------------------------------------------------------------------------------------------------
-    //kills off bottom half of the species
+    //unreachable code to make the parser happy
+    return this.players[0];
+  }
+  //------------------------------------------------------------------------------------------------------------------------------------------
+  //kills off bottom half of the species
   cull() {
-      if (this.players.length > 2) {
-        for (var i = this.players.length / 2; i < this.players.length; i++) {
-          // this.players.remove(i);
-          this.players.splice(i, 1);
-          i--;
-        }
+    if (this.players.length > 2) {
+      for (var i = this.players.length / 2; i < this.players.length; i++) {
+        // this.players.remove(i);
+        this.players.splice(i, 1);
+        i--;
       }
     }
-    //------------------------------------------------------------------------------------------------------------------------------------------
-    //in order to protect unique this.players, the fitnesses of each player is divided by the number of this.players in the species that that player belongs to
+  }
+  //------------------------------------------------------------------------------------------------------------------------------------------
+  //in order to protect unique this.players, the fitnesses of each player is divided by the number of this.players in the species that that player belongs to
   fitnessSharing() {
     for (var i = 0; i < this.players.length; i++) {
       this.players[i].fitness /= this.players.length;
