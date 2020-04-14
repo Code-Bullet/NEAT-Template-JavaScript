@@ -109,13 +109,13 @@ function drawBrain() { //show the brain of whatever genome is currently showing
   if (runBest) {
     population.bestPlayer.brain.drawGenome(startX, startY, w, h);
   } else
-  if (humanPlaying) {
-    showBrain = false;
-  } else if (showBestEachGen) {
-    genPlayerTemp.brain.drawGenome(startX, startY, w, h);
-  } else {
-    population.players[0].brain.drawGenome(startX, startY, w, h);
-  }
+    if (humanPlaying) {
+      showBrain = false;
+    } else if (showBestEachGen) {
+      genPlayerTemp.brain.drawGenome(startX, startY, w, h);
+    } else {
+      population.players[0].brain.drawGenome(startX, startY, w, h);
+    }
 }
 //-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 //writes info about the current player
@@ -127,20 +127,20 @@ function writeInfo() {
     text("Score: " + genPlayerTemp.score, 650, 50); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
     text("Gen: " + (genPlayerTemp.gen + 1), 1150, 50);
   } else
-  if (humanPlaying) {
-    text("Score: " + humanPlayer.score, 650, 50); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-  } else
-  if (runBest) {
-    text("Score: " + population.bestPlayer.score, 650, 50); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-    text("Gen: " + population.gen, 1150, 50);
-  } else {
-    if (showBest) {
-      text("Score: " + population.players[0].score, 650, 50); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
-      text("Gen: " + population.gen, 1150, 50);
-      text("Species: " + population.species.length, 50, canvas.height / 2 + 300);
-      text("Global Best Score: " + population.bestScore, 50, canvas.height / 2 + 200);
-    }
-  }
+    if (humanPlaying) {
+      text("Score: " + humanPlayer.score, 650, 50); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
+    } else
+      if (runBest) {
+        text("Score: " + population.bestPlayer.score, 650, 50); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
+        text("Gen: " + population.gen, 1150, 50);
+      } else {
+        if (showBest) {
+          text("Score: " + population.players[0].score, 650, 50); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<replace
+          text("Gen: " + population.gen, 1150, 50);
+          text("Species: " + population.species.length, 50, canvas.height / 2 + 300);
+          text("Global Best Score: " + population.bestScore, 50, canvas.height / 2 + 200);
+        }
+      }
 }
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -151,18 +151,18 @@ function keyPressed() {
       //toggle showBest
       showBest = !showBest;
       break;
-      // case '+': //speed up frame rate
-      //   speed += 10;
-      //   frameRate(speed);
-      //   prvarln(speed);
-      //   break;
-      // case '-': //slow down frame rate
-      //   if(speed > 10) {
-      //     speed -= 10;
-      //     frameRate(speed);
-      //     prvarln(speed);
-      //   }
-      //   break;
+    // case '+': //speed up frame rate
+    //   speed += 10;
+    //   frameRate(speed);
+    //   prvarln(speed);
+    //   break;
+    // case '-': //slow down frame rate
+    //   if(speed > 10) {
+    //     speed -= 10;
+    //     frameRate(speed);
+    //     prvarln(speed);
+    //   }
+    //   break;
     case 'B': //run the best
       runBest = !runBest;
       break;
